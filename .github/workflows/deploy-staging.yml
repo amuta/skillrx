@@ -2,8 +2,8 @@ name: Deploy to Staging
 
 on:
   push:
-    branches: [ develop ]  # or whatever branch you want to trigger staging
-  workflow_dispatch:  # Allow manual trigger
+    branches: [ develop ]
+  workflow_dispatch:
 
 jobs:
   deploy-staging:
@@ -30,8 +30,6 @@ jobs:
         tags: |
           andremuta/skillrx:${{ github.sha }}
           andremuta/skillrx:staging-latest
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
 
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
