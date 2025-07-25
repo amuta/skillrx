@@ -103,14 +103,17 @@ production:
   cache:
     <<: *default
     database: skillrx_production_cache
+    url: <%= ENV['DATABASE_URL'] %>
     migrations_paths: db/cache_migrate
   queue:
     <<: *default
     database: skillrx_production_queue
+    url: <%= ENV['DATABASE_URL'] %>
     migrations_paths: db/queue_migrate
   cable:
     <<: *default
     database: skillrx_production_cable
+    url: <%= ENV['DATABASE_URL'] %>
     migrations_paths: db/cable_migrate
 
 staging:
