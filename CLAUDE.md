@@ -53,29 +53,35 @@ KAMAL_DESTINATION=staging bin/kamal app exec --reuse "command here"
 - **Used by**: Rails for encryption/decryption
 - **Injected via**: Kamal env.secret in deploy.yml
 
-#### 4. AWS Configuration (Hardcoded in deploy.yml)
+#### 4. AWS Configuration
+- **Variables**: 
+  - `AWS_ACCESS_KEY_ID` (secret - different per environment)
+  - `AWS_SECRET_ACCESS_KEY` (secret - different per environment)
+  - `AWS_DEFAULT_REGION` (clear - us-east-1)
+  - `AWS_BUCKET_NAME` (clear - different per environment)
+  - `AWS_ENDPOINT_URL` (clear - empty for real AWS)
+- **Set in**: env.secret for keys, env.clear for region/bucket
+- **Used by**: Active Storage, S3 operations
+
+#### 5. Azure Storage Configuration
+- **Variables**:
+  - `AZURE_STORAGE_ACCOUNT_NAME` (secret - different per environment)
+  - `AZURE_STORAGE_ACCOUNT_KEY` (secret - different per environment)
+  - `AZURE_STORAGE_SHARE_NAME` (clear - different per environment)
+- **Set in**: env.secret for credentials, env.clear for share name
+- **Used by**: Azure storage operations
+
+#### 6. Development/Debug Configuration
+- **Variables set in env.clear**:
+  ```yaml
+  LOCALSTACK_DEBUG: "0"  # Set to "1" for LocalStack debugging
+  S3_SKIP_SIGNATURE_VALIDATION: "0"  # Set to "1" to skip S3 signature validation
+  ```
+
+#### 7. Application Configuration
 - **Variables set in env.clear**:
   ```yaml
   RAILS_ENV: production
-  AWS_DEFAULT_REGION: us-east-1
-  AWS_ACCESS_KEY_ID: test
-  AWS_SECRET_ACCESS_KEY: test
-  AWS_BUCKET_NAME: skillrx-development
-  AWS_ENDPOINT_URL: ""
-  ```
-- **Note**: AWS_REGION is auto-set from AWS_DEFAULT_REGION
-
-#### 5. Azure Storage (Hardcoded in deploy.yml)
-- **Variables set in env.clear**:
-  ```yaml
-  AZURE_STORAGE_ACCOUNT_NAME: skillrx
-  AZURE_STORAGE_ACCOUNT_KEY: skillrx
-  AZURE_STORAGE_SHARE_NAME: skillrx
-  ```
-
-#### 6. Application Configuration (Hardcoded in deploy.yml)
-- **Variables set in env.clear**:
-  ```yaml
   SOLID_QUEUE_IN_PUMA: true
   ```
 
@@ -117,6 +123,10 @@ STAGING_SSH_PRIVATE_KEY=<contents of ~/.ssh/skillrx_web_staging.pem>
 STAGING_DATABASE_URL=postgres://dbmasteruser:password@host:5432/skillrx_staging
 STAGING_SECRET_KEY_BASE=your-staging-secret-key-base
 STAGING_RAILS_MASTER_KEY=your-staging-master-key
+STAGING_AWS_ACCESS_KEY_ID=test (or real AWS key)
+STAGING_AWS_SECRET_ACCESS_KEY=test (or real AWS secret)
+STAGING_AZURE_STORAGE_ACCOUNT_NAME=skillrx (or real Azure account)
+STAGING_AZURE_STORAGE_ACCOUNT_KEY=skillrx (or real Azure key)
 ```
 
 #### Production Secrets (when ready):
@@ -125,6 +135,10 @@ PRODUCTION_SSH_PRIVATE_KEY=<contents of ~/.ssh/skillrx_web_production.pem>
 PRODUCTION_DATABASE_URL=postgres://dbmasteruser:password@host:5432/skillrx_production
 PRODUCTION_SECRET_KEY_BASE=your-production-secret-key-base
 PRODUCTION_RAILS_MASTER_KEY=your-production-master-key
+PRODUCTION_AWS_ACCESS_KEY_ID=<real AWS access key>
+PRODUCTION_AWS_SECRET_ACCESS_KEY=<real AWS secret key>
+PRODUCTION_AZURE_STORAGE_ACCOUNT_NAME=<real Azure storage account>
+PRODUCTION_AZURE_STORAGE_ACCOUNT_KEY=<real Azure storage key>
 ```
 
 ### Local Deployment Checklist

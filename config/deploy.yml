@@ -27,21 +27,19 @@ registry:
     - KAMAL_REGISTRY_PASSWORD
 
 # Inject ENV variables into containers (secrets come from .kamal/secrets).
+# Note: Environment-specific values are defined in deploy.staging.yml and deploy.production.yml
 env:
   secret:
     - RAILS_MASTER_KEY
     - DATABASE_URL
     - SECRET_KEY_BASE
+    - AWS_ACCESS_KEY_ID
+    - AWS_SECRET_ACCESS_KEY
+    - AZURE_STORAGE_ACCOUNT_NAME
+    - AZURE_STORAGE_ACCOUNT_KEY
   clear:
     RAILS_ENV: production
     AWS_DEFAULT_REGION: us-east-1
-    AWS_ACCESS_KEY_ID: test
-    AWS_SECRET_ACCESS_KEY: test
-    AWS_BUCKET_NAME: skillrx-development
-    AWS_ENDPOINT_URL: ""
-    AZURE_STORAGE_ACCOUNT_NAME: skillrx
-    AZURE_STORAGE_ACCOUNT_KEY: skillrx
-    AZURE_STORAGE_SHARE_NAME: skillrx
     SOLID_QUEUE_IN_PUMA: true
 
 # Aliases are triggered with "bin/kamal <alias>". You can overwrite arguments on invocation:
