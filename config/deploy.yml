@@ -22,8 +22,9 @@ proxy:
   host: 3.239.195.31
 
 registry:
-  username: dummy
-  password: dummy
+  username: andremuta
+  password:
+    - KAMAL_REGISTRY_PASSWORD
 
 # Inject ENV variables into containers (secrets come from .kamal/secrets).
 env:

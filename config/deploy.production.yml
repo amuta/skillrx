@@ -16,7 +16,7 @@ proxy:
 registry:
   username: andremuta
   password:
-    - DOCKER_HUB_PASSWORD
+    - KAMAL_REGISTRY_PASSWORD
 
 # Production environment variables
 env:

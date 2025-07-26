@@ -48,9 +48,9 @@ jobs:
 
     - name: Deploy to staging with Kamal
       env:
-        DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        KAMAL_REGISTRY_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         STAGING_DATABASE_URL: ${{ secrets.STAGING_DATABASE_URL }}
         STAGING_SECRET_KEY_BASE: ${{ secrets.STAGING_SECRET_KEY_BASE }}
         STAGING_RAILS_MASTER_KEY: ${{ secrets.STAGING_RAILS_MASTER_KEY }}
       run: |
-        kamal app boot --destination staging --version ${{ github.sha }}
+        KAMAL_DESTINATION=staging bin/kamal deploy --skip-push
